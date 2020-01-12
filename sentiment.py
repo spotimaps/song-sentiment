@@ -53,7 +53,7 @@ def color_from(song, artist):
         color[1] = color[1] + ((happy[1]-sad[1])/0.6) * product
         color[2] = color[2] + ((happy[2]-sad[2])/0.6) * product
 
-    return 'rgb(' + str(red) +','+ str(green)+','+ str(blue)+')'
+    return 'rgb(' + str(color[0]) +','+ str(color[1])+','+ str(color[2])+')'
 
 if __name__ == "__main__":
     app.run()
