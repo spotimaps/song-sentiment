@@ -13,7 +13,7 @@ def getMember(song,artist):
     return color_from(song,artist)
 
 # Instantiates a client
-  client = language.LanguageServiceClient.from_service_account_json(
+client = language.LanguageServiceClient.from_service_account_json(
         '../spotimaps-e9104cef02b9.json')
 
 def sentiment(song,artist):
@@ -46,8 +46,8 @@ def color_from(song, artist):
     if product > 0.3:
         color = happy
 
-    elif product < 0.3
-        color = sad;
+    elif product < 0.3:
+        color = sad
     else:
         color[0] = color[0] + ((happy[0]-sad[0])/0.6) * product
         color[1] = color[1] + ((happy[1]-sad[1])/0.6) * product
