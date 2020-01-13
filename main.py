@@ -12,13 +12,20 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 
+@app.route("/")
+def landing_page():
+    return "landing page: site online"
+
 @app.route("/sentiment/<string:song>/<string:artist>")
 def getMember(song,artist):
     return color_from(song,artist)
 
 # Instantiates a client
-client = language.LanguageServiceClient.from_service_account_json(
-        '../spotimaps-e9104cef02b9.json')
+client = language.LanguageServiceClient()
+
+###use instead if running locally
+#client = language.LanguageServiceClient.from_service_account_json(
+        #'../spotimaps-e9104cef02b9.json')
 
 def sentiment(song,artist):
     #retrieve lyrics
