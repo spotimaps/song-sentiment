@@ -2,7 +2,11 @@ import requests
 
 #enable flask
 from flask import Flask
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)
+
 # Imports the Google Cloud client library
 from google.cloud import language
 from google.cloud.language import enums
@@ -24,15 +28,15 @@ def sentiment(song,artist):
     try:
         text = response.json()["message"]["body"]["lyrics"]["lyrics_body"][:-53]
     except:
-        return "(0.0, 0.0)"
+        return [0.0, 0.0]
 
     document = types.Document(
         content=text,
         type=enums.Document.Type.PLAIN_TEXT)
-    sentiment = client.analyze_sentiment(document=document).document_sentiment
+    to_return = client.analyze_sentiment(document=document).document_sentiment
 
-    print("score:", sentiment.score, "magnitude", sentiment.magnitude)
-    return (sentiment.score, sentiment.magnitude)
+    #print("score:", sentiment.score, "magnitude", sentiment.magnitude)
+    return [to_return.score, to_return.magnitude]
 
 def color_from(song, artist):
     color = [142,93,42] #in between
@@ -41,6 +45,7 @@ def color_from(song, artist):
     sad = [255, 0, 0] #red
     
     sentiments = sentiment(song, artist)
+    print(sentiments)
     product = sentiments[0] * sentiments[1]
 
     if product > 0.3:
